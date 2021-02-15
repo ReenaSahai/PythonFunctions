@@ -361,7 +361,73 @@ Yes, if you have different arguments to be passed, then you can do exactly like 
 
 
 
+Equal Number Sheep and Wolves#434
+Matthew Stacey Joseph
+14 days ago in Mini-Projects – Mini-Project 1
 
+STAR
+
+WATCH
+
+22
+88
+88
+VIEWS
+
+Does anyone know why all cases above (3,3) where there are equal sheep and wolves the problem are unsolvable? I can't find a proof of this online so I'm worried my code is just wrong in this corner case. I checked all the way to 500 sheep and 500 wolves. As well as 50000 sheep and 50000 wolves in a separate test.
+
+Comment
+
+Sort by Newest 
+Prashanth Aditya Susarla
+14 days ago
+Your code isn't wrong.
+
+I have tested it up to 500 pairs and have seen the same behaviour from code that passes all of the Gradescrope tests optimally.
+
+Yes, I'm hunting (albeit not with any degree of urgency, at the moment) for a proof too. :)
+
+My intuition is that beyond a point, all available paths always reduce to say a (5, 5) which is unsolvable. Some mathematical induction-based proof may be possible.
+
+
+1
+Reply
+
+5 Answers
+Kevin Gordon Menear
+13 days ago
+
+Here's my best shot. 
+
+(5,5) is unsolvable
+
+Every problem with equal number of sheep & wolves greater than 5 will reduce to 5,5 because, for such a problem:
+
+The result of your first two moves must be one wolf on the right
+
+any other result would include more wolves than sheep on the left
+
+The result of your next two moves must be either 1 wolf and 1 sheep on right, or 2 wolves on right
+
+This is harder to explain, but it's true, and can be diagrammed
+
+1 wolf and 1 sheep on right is the same as the previous problem in the set of those with same # of sheep and wolves (8,8 becomes 7,7... 7,7 becomes 6,6... and so on) with the added constraint that there are already sheep on the right side so certain moves that would be allowed in the previous problem would not be allowed now (as in, the problem would now only be harder to solve, not easier)
+
+This situation waterfalls from one problem set to the next until you get to the unsolvable (5,5)
+
+2 wolves on the right is a dead end - the only viable option would be to switch one wolf with one sheep on the right, but this brings you back to the situation in #3
+So every problem with equal number of sheep & wolves greater than 5 is unsolvable
+
+
+
+My code is broken for equal sheep and wolves after 3,3 so thanks for pointing this out! 
+
+
+Never noticed that. My code behaves the same (tested up to 200), so I think your code is fine.
+
+
+
+Interesting find. Uploading to gradescope won’t clarity it. Gradescope verifies your hypothesis but doesn’t give any insight on why this occurs. Let me know if you find out why this anomaly occurs. Good find
 
 
 .
