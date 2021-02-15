@@ -1,0 +1,368 @@
+The problem goes like this: you are a shepherd tasked with getting sheep and wolves across a river for some reason. If the wolves ever outnumber the sheep on either side of the river, the wolves will overpower and eat the sheep. You have a boat, which can only take one or two animals in it at a time, and must have at least one animal in it because you’ll get lonely (and because the problem is trivial otherwise). How do you move all the animals from one side of the river to the other?
+In the original Sheep & Wolves (or Guards & Prisoners) problem, we specified there were 3 sheep and 3 wolves; here, though, your agent should be able to solve the problem for an arbitrary number of initial sheep and wolves. You may assume that the initial state of the problem will follow those rules (e.g. we won’t give you more wolves than sheep to start). However, not every initial state will be solvable; there may be combinations of sheep and wolves that cannot be solved.
+You will return a list of moves that will solve the problem, or an empty list if the problem is unsolvable based on the initial set of Sheep and Wolves. You will also submit a brief report describing your approach.
+(Your solve method should receive the initial number of sheep and wolves as integers, and return a list of 2-tuples that represent the moves required to get all sheep and wolves from the left side of the river to the right. If it is impossible to move the animals over according to the rules of the problem, return an empty list of moves.
+
+
+
+
+s
+count(Loosince so where
+
+
+1.Send over two wolves.
+2. Bring one back.
+3. Send over two wolves.
+4. Bring one back.
+5. Send over two sheep.
+6. Bring a wolf and a sheep back.
+7.Send over two sheep.
+8.Bring a wolf back.
+9. Send over two wolves.
+10. Bring one back.
+11.Send over the last two wolves.
+Similar to BFS but instead of searching, create a queue from the initial state loop over it to check if the move is valid add to the queue until all the animals reach other side of the bank
+
+
+
+int  s, w 
+dir= -1 (when left to right)
+dir= 1 (wen right to left)
+
+if s >=w >0 :
+     n(0)= s,w, 
+     n(1)=s-1, w-1, -1    or    s, w-2, -1 (left) 
+     n(2) =s-2 ,w-2, 1 or   w-1, 1 (right)
+     n(3)=s,0
+     n(4)=
+
+
+
+
+
+
+a =1
+b=1
+
+list = [a,b]
+
+l =[3,3]
+f1 = 1
+f2 = 1
+c = len(l)
+i =0
+emp = []
+
+g = l[i] - f1
+emp.append(g)
+g = l[i + 1] - f2
+emp.append(g)
+
+
+if(l[i]>=l[i+1] and emp[i]<=emp[i+1]):
+
+
+    print(emp)
+    print("sheeps are more or equal")
+else:
+    print("empty list")
+
+
+
+
+
+
+# if(a==1 and b ==1):
+#     c= [1,1]
+#     print(c)
+#
+# if(a==2 and b ==2):
+#     c= [(1,1),(2,0),(0,2)]
+#     print(c)
+
+Agent Efficiency#22
+P
+Patrick Westervelt
+21 days ago in Mini-Projects – Mini-Project 1
+STAR
+WATCH
+883300
+VIEWS
+2
+In the questions for this report, I notice that we are to discuss the efficiency of our agent. Does this specifically mean that we should talk about things like time or space complexity, or only things more related to what's discussed in the lectures, ie whether the agent considers invalid states?
+Additionally, we are not actually graded on agent efficiency, are we? Rather, just 20 points from the assessment and 20 from the report. So would it be valid in the report to write something along the lines of, "My agent is efficient in terms of X. This is because blah blah blah. It is inefficient in terms of Y. It's because blah blah blah, but I could have improved this by doing blah blah blah."?
+Comment
+2 Answers
+C
+Cason Cherry
+INSTRUCTOR4
+So I can't tell you what to include into your report, but I can expand a bit. When we speak of efficiency, we're discussing computational/time complexity (is my agent doing things in the right way). Think Big-O notation. How efficient is the algorithm (e.g. what is its worst case) and what have you done to optimize it? There are certainly things you can do to improve the best case of your agent's time complexity (some of which you've hinted at above).
+Student:
+One strategy I devised for this was to create a simple timer for different test cases and compare.
+Libraries allowed to use
+By David Joyner INSTRUCTOR
+Right now we only support the native Python installation in the mini-project, as well as Pillow and Numpy (not that you should ever need Pillow).
+Watch Lecture 3 to understand more about the problem
+I was considering using a queue from the collections module for my algorithm on Mini-Project 1, such as
+From collections import deque
+Will Gradescope support this?
+It's in the standard library of Python so it's fair game, look here 
+https://docs.python.org/3.8/library/
+
+For anyone interested in learning about search algorithms, I always recommend starting with Korf (1998), Artificial Intelligence Search Algorithms. Though, this isn't necessarily an endorsement for a search algorithm, you can implement these projects however you want. We do not have any prohibition on looking at the relevant pseudocode for these algorithms online, but we expect any implementation of them to be your own as outlined in our academic honor policy.
+Comment
+Add comment
+S
+Sumedh Rasal14 days ago
+Hi Cason, where can I find this book/journal Artificial Intelligence Search Algorithms?
+Reply
+C
+Cason Cherry
+INSTRUCTOR
+13 days ago
+Use Google Scholar: https://scholar.google.com/scholar?hl=en&as_sdt=0%2C33&q=Artificial+Intelligence+Search+Algorithms&btnG=
+
+Gradescope timeout issue
+I had the same running time issue earlier on when I follow the idea of Breath-first Search. When I switch to Depth-first, it completes very fast. Hope it helps: )
+Hi Jin, thanks for posting this! You were completely right. When I was using BFS it was taking too long to run on my computer and always timing out on Gradescope. When I switched to using DFS it completed instantly on my computer and on Gradescope. I went from 0.0 to 40 from this advice.
+Reply
+J
+Jamie Gant
+13 days ago
+I ran into the same issue. What helped me was actually drawing out a balanced initial state (2 sheep and 2 wolves) and also an unbalanced initial state for example (5 sheep and 3 wolves). It took a couple sheets of paper once I eliminated all the states but once I drew out only the smart states visually on paper, helped me a lot. Actually drawing it out with pen and paper I could reason with the visual vs. getting lost in code and trying to tweak this part of that part and just getting frustrated. I am a visual learner so it really helped to realize why I got some solutions on gradescope right but others were timing out. 
+
+How to test performance?
+Have a look at #2 for agent efficiency. When we discuss performance, we're specifically referring to how well it performed. We're looking for your observational evaluation here, are there notable observations you can make about why performance increases/decreases? As far as length is concerned, you are always welcome to write less as long as you answer the prompts. Some approaches may warrant more discussion than others. Make sure you address the key points either way.
+Python data structure question#193
+Mini-Projects – Mini-Project 1
+After reading through the Artificial Intelligence Search Algorithms, it looks like some search algorithm uses tree structure or queue. Are all these data structures available in the native python library? Or are we expected to implement those by ourselves? Any resources to refer to? Thanks!
+Comment
+Sort by Newest 
+3 Answers
+A
+In less "formal" manner, I would suggest just using a python list as your queue, updating the list with each iteration. The tree structure can be treated as a loop. If you start from state1 and perform operations on it to get a certain number of children states, you are in the early stages of a tree. Another iteration would make children states for the previously made children (1 -> 4 -> 16 -> ....).
+G
+George Seah
+12 days ago
+I use defaultdict to maintain the graph structure/tree structure. a separate dict to store the node object. hope it helps.
+J
+Josh Adams
+13 days ago
+All can be implemented natively with pythons standard library. 
+https://docs.python.org/3/library/queue.html
+A tree can be implemented using the python list but would be more efficient if using a third party library, such as NumPy and its array object.
+Question about Graph Search with Generate and Testselect *
+C
+Mini-Projects – Mini-Project 1
+Hi everyone, I tried implementing graph search with generate and test for this mini-project, but I got confused by moving right vs moving left, and also by keeping the generator separate from the tester. I solved it using SOAR instead, but am still curious about the graph search method for solving this problem:
+What is a good way to track the problem states and moves between states?
+What is a clean way to code a generator and a tester so that the generation and the testing don't overwrite each other?
+Sreedevi Pandiyath Viswambaran
+11 days ago
+2
+I used BFS. Used tuple to store the problem state. The direction can be included in the problem state. 
+Comment
+Add comment
+Y
+Yash Krushnkant Patel11 days ago
+Any reason you chose to implement BFS instead of DFS? New to Python and coding in general, so I'm curious when to use one over the other. 
+Reply
+M
+Matthew Rideout11 days ago
+With a BFS, as soon as you find a solution, you know it was accomplished in the fewest possible steps. With DFS, you have to keep going, because all you know for sure if you found a solution, but it may not be the shortest possible.
+1Reply
+S
+Sreedevi Pandiyath Viswambaran11 days ago
+AFAIK, BFS fares better if you need to find the shortest path. You can see the main differences here.
+1Reply
+S
+Satish Suresh Kumar11 days ago
+How you built the graph ?. 
+Reply
+S
+Sreedevi Pandiyath Viswambaran11 days ago
+its explained in detail in lesson 3. I just followed the cue from there and created a BFS algo
+Reply
+V
+Hi which sub lesson is it? I tried looking for it but couldn't find it.
+Reply
+S
+hey its in generate and test lesson 04. https://gatech.instructure.com/courses/171260/pages/04-dot-03-exercise-generate-and-test-i?module_item_id=1421144
+
+DFS has some inherent disadvantages, but it has a technically lower memory requirement, so it could be faster depending on the tree depth and where the solution is located, sos depending on your problem (think like lots more sheeps and wolves) this could be a very cumbersome way of looking at the problem (but its memory costs are low). Of the two algorithms you have, BFS is the only optimal and complete solution (if you are using this path of course). Though, one student here has successfully implemented using DFS (see here: #270). This table might help -- these are from my notes in CS6601, and I've included UCS (which doesn't apply) as a bonus, so you can find most of these details in AI: A Modern Approach, 3rd Ed., or by watching lectures on search in CS6601, or by reading some of the papers referenced by Korf in Artificial Intelligence Search Algorithms:
+•	DFS searches the longest nodes first, and breaks ties from left-to-right. It is not optimal and is not guaranteed to find the shortest route by expanding the longest nodes first.
+ 
+**NOTE on UCS: Consider an infinite path whose costs are as follows: 1 + 1/2 + 1/4 + 1/8 + 1/16 + 1/32 + ... The infinite sum of this series in the limit is 2. If the shortest path to the goal node has cost greater than 2, cheapest first search will be incomplete. In the case of an infinite tree, cheapest first is complete only if (1) each action has a non-zero cost separate from the path cost and (2) no node has an infinite number of successors. UCS is complete only if you assume a non-zero action cost. If you assume a zero action cost then UCS is incomplete.
+ 
+
+Azmain Amin14 days ago
+Both BFS and DFS has a runtime of O(number of edges + number of nodes), so they are basically same in terms of time complexity. The secret is to minimize the number of nodes (i.e. states) that are created, which can be done in both BFS and DFS. But as you said, only BFS is guaranteed to produce optimal solution as it guarantees minimal number of steps taken (jumping from one level to next). 
+
+Cason Cherry
+INSTRUCTOR
+14 days ago
+Yes, that is a good point of clarification on the theoretical time complexity. Though, perhaps for realized time complexity BFS hits its best case on average more frequently since it explores fewer nodes. I suppose one could make an argument either way that dependent upon where the goal is situated, either DFS or BFS is faster 🤷. But we're splitting hairs because if, for example, you used iterative deepening depth-first search, the cumulative effect of searching results in a breadth-first search. 
+Ultimately, as you suggested, pruning nodes on-the-fly is the wisest decision.
+H
+3
+It kinda is - but BFS will reach the solution a bit sooner than DFS from my understanding. I also found it easier to use BFS for this problem, because we essentially want the minimal amount of movements, therefore it makes sense to terminate the algo once you've reached the final state and return the list of moves that got you to the final state. 
+DFS would still continue to find all possible moves, then you'd have to determine the shortest path, while BFS does it for you.
+Comment
+
+
+Jeff Richley15 days ago
+Exactly. For DFS, you have to explore the entire tree because there might be a shorter path. The first one in BFS is guaranteed to be the shortest. There may be others that are just as short, but they won't be shorter.
+Reply
+S
+Steven Campbell16 days ago
+I agree. In this case I found BFS to better match the intention of this project in finding the optimal number of movements in the most efficient manner. DFS may make sense in scenarios where there are two or more path distances that match and other criteria need to be evaluated for an optimal solution, however BFS in this case is "good enough". 
+M
+BFS is going to be faster, but prohibitive for larger path. For every example I have tried so far I found DFS returns optimal path too. So I am wondering if there is something about this state space, where dfs is as optimal as bfs. Can anyone give me a specific example of sheep, wolf where dfs is not returning optimal. It is just stack vs queue, you can try both.
+
+INSTRUCTOR
+15 days ago
+Think more along the lines of an infinite branching factor, or at least where search is prohibitively complex. You'll likely either never return or you'll still be looking. These types of things are important with interactive agents where someone is expecting a response, as no one wants to wait around forever. This state space is small, so DFS is probably more performant in that way.
+I chose BFS over DFS because I can find the solution faster. Since we want to find a solution that takes the least number of moves, we would have to traverse nearly all of the nodes in the tree using DFS. We can't just stop once we found a solution because some other path could have the optimal solution. BFS traverses all neighbor nodes before going deeper into the tree so you could stop once a node matches the desired goal state; no need to go further.
+
+A
+Alan Michael Terranova16 days ago
+Oh right, that's a good point. BFS is going to be faster in this case. thanks!
+
+Kyle James
+16 days ago
+BFS is going to return the optimal path as weights are all equal. DFS, however, is not guaranteed to return the optimal path.
+
+BFS - Having a hard time wrapping my head around this
+
+Azmain Amin
+16 days ago in Mini-Projects – Mini-Project 
+In BFS, you have your "root" which is the initial state and an objective state i.e. the desired state where all sheep + wolves are on the right side. Usually in BFS problem, you already have the full tree; you just need to find optimal path within the tree.
+But in this problem, we have to create the tree by generating successor states. So how are people addressing this? Are you guys creating the tree first AND then doing a BFS? This seems like a catch-22 to me!
+Comment
+Dhvani Mehta 
+The part I don't understand is, how do you define the initial state? Are we suppose to define the direction as part of initial state too? 
+Thu Anh Hoang 
+What Azmain said and yes, where the boat is should also be included in your states. 
+
+Azm 
+For the initial state, you can make the following assumptions: initial sheep and initial wolves number given and they start on the left. The boat is also on the left. 
+Reply
+
+I found that for larger number of sheep, wolf configuration BFS becomes slow, i suppose due to sheer number of states. Think about it, if for a 25 step path, if there are 3 potential next state at each, you are talking 3^25 states. I used dfs, which was fast, low memory and for the nature of this problem provides optimum result too. Using stack instead of queue gives dfs, i generate new states as i go and keep a cache so that same states do not get regenerated in another path.
+Comment
+Azmain Amin 
+Both BFS and DFS has a runtime of O(number of edges + number of nodes), so they are basically same in terms of time complexity. The secret is to minimize the number of nodes (i.e. states) that are created, which can be done in both BFS and DFS. I'm guessing you are checking against a "cache" and throwing out states to "minimize" their number. I am doing the same even with BFS.
+Jas L 
+Do you store the current node's parent? If you throw out the duplicated states of other nodes but with different parent, then how do you track back the actions then return them?
+Reply
+Azmain Amin 
+My implementation does not have the a node in the graph sense that it has a parent pointer or child pointer. Its just an object class State . I am storing all "previous states" in a set, which you can think of as "parents" of "current states". 
+1Reply
+H5
+I hope I can help without providing too much info that could get us in trouble.
+Yes- you're generating the queue yourself but while traversing it (so making it on the fly). Essentially you start with your initial moves and add it to a queue, then keep going through the queue and making moves until you reach your end state. Just be sure to pop the queue once you've traversed it, and also save any data that's needed.
+Cason Cherry
+High-level discussion like this is definitely fine!  
+So just to be a little more clear on this, as we’re making the queue ourselves we should also be choosing what to add to the queue. i.e. our next state? 
+Also, knowing that there are a handful of moves which are actually possible will let us limit our moves I believe? 
+I hope I’m not going too deep into this as to get into trouble here as well.
+Reply
+H 
+Yea so if you think about the problem, From the initial state there are only certain amount of moves you can make (the videos go over which ones). So out of those valid moves you essentially generate a starting queue. Then you traverse through the queue and add any valid moves to the queue, so if a move isn't valid then you skip it and move on to the next possible move. Just a hint - "historical" data matters so be sure to save that info somehow. 
+It 100% will limit the moves - looking at the 3,3 example after your 3rd move, there only one valid path that takes you to the promise land. 
+Reply 
+So we are adding moves to the queue and not the states?
+Reply
+H 
+Well adding just the move, or the state to the queue doesn't help too much. Therefore you want to consider your Node (think semantic network) to have all info possible so you want the moves taken, state that node currently is in, and which side the boat is on. I essentially store all of that in the node therefore I can track how a certain node got to it's current state (with all prior moves) and the side of the boat so I know if I've seen the same state before. Hopefully that helps. 
+In the end, you essentially want to put a node with as much info as you can in the queue, so when you're processing the node from the queue, you know the state, but also the moves that got you there
+Reply
+Azmain  
+Yep, that's what I am doing rn. I guess the question should have been: how is this analogous to traditional BFS.
+ 
+I thought of it as a BFS-style approach to tree generation. Rather than searching through an existing tree, you are creating a tree, which is a little different but you can think of BFS as an inspiration to HOW you generate the tree. From each state you could generate another state through some legal move, then immediately process that state to generate another state until you get stuck or all the animals are on the right side. This would be following a DFS approach. As others have discussed, by generating the tree level by level following BFS, you can make sure that when you get to the goal state, you can stop since that will be the shortest path. If you save the data you need, you won't need to do another traversal of the tree after.
+Azmain Amin15 days ago
+This makes complete sense. Thanks!
+
+K
+Kevin Y Lin
+For BFS/DFS, you visit a node, then look at its neighbors, then add them to a queue/stack. The only difference here is that the node doesn't have neighbor states yet - before you start looking at the neighbors, you need to generate (and test) them first. And once you have valid neighbor states, you can continue with BFS/DFS.
+That was the approach I took. Hope that helps!
+https://en.wikipedia.org/wiki/Breadth-first_search
+Vishal Arora11 days ago
+Hi Kevin, so you mean
+1.) Generate the valid states
+2.) Add the valid states to the queue
+3.) Run through the BFS algorithm to get the shortest path
+If that's what you meant what confusing is when I look at the BFS algorithm in the structure we have Edges and Vertices. I can't wrap my head around what is a vertex (State or move) and what are Edges(State or move). I see this structure as a dictionary but what are keys and what are values 
+ 
+Reply
+D
+I generated the whole tree.. I build a generator (state to new legal states) and then generate the tree when traveling the whole tree till the end.. 
+
+H
+Hemanth Chinta15 days ago
+Did you encounter memory exception at higher inputs(ex 20W,17S) you are building the whole tree ?
+Reply
+ 
+Jas L15 days ago
+Same, but when the sheep's number become large, this method is slow. My code is timeout.
+Reply
+I'm generating a queue with one element, then looping over it. Within the loop, items are both added to and removed from the queue.
+You don't need to generate the entire tree - just enough of it to find the first solution.
+H
+Azmain Amin16 days ago
+Ok, that's what I am going with as well. This does not "seem" to be the traditional BFS -> more like generate the next level and see if you have the result, if not, generate the next next level etc. 
+his is the testing file I've prepared for the Mini Project-1 - Sheeps/Wolves problem. It can assert whether your solution is right and whether the number of moves are optimal and also the time taken for various data points. You can replace this code with your main.py or create a separate test.py file with this code and run it.
+from SemanticNetsAgent import SemanticNetsAgent
+import unittest
+import time
+
+class SheepWolvesTests(unittest.TestCase):
+    def test(self):
+        #This will test your SemanticNetsAgent
+        #with seven initial test cases.
+        test_agent = SemanticNetsAgent()
+        tests = [(1,1),(2,2),(3,2),(4,2),(5,2),(6,2),(7,2),(4,4),(5,4),(6,4),(3,3),(4,3),(5,3),(6,3),(7,3),(8,3),(9,3),(13,3),(5,5),(2,1),(3,1),(4,1),(5,5),(6,6),(6,5),(7,5)]
+        test_optimals = [1,5,7,9,11,13,15,0,15,17,11,11,13,15,17,19,21,29,0,3,5,7,0,0,19,21]
+        
+        for i in range(len(tests)):
+            test = tests[i]
+            start = time.time()
+            moves = test_agent.solve(test[0],test[1])
+            print('For ',test[0],',',test[1]," :",time.time() - start)
+            print('For ',test[0],',',test[1],' :',moves)
+            left = (test[0],test[1])
+            right = (0,0)
+            if len(moves)==0:
+                right = left
+            leftSide = True
+            for move in moves:
+                # print('Move: ',move)
+                if leftSide:
+                    leftSide = False
+                    left = (left[0] - move[0],left[1] - move[1])
+                    right = (right[0] + move[0],right[1] + move[1])
+                    # print('L:',left,' R:',right)
+                else:
+                    leftSide = True
+                    left = (left[0] + move[0],left[1] + move[1])
+                    right = (right[0] - move[0],right[1] - move[1])
+
+            self.assertEqual(right,test, msg="Not a right solution")
+            self.assertEqual(len(moves),test_optimals[i], msg="Incorrect number of optimal moves")
+    
+
+if __name__ == "__main__":
+    unittest.main()
+t's very nice and very helpful! I really appreciate you putting them together. Just one more question, shall we declare the new object (I mean testagent = SemanticNetsAgent()) after the test = tests[i]? Otherwise, if students declare some attribute variables (like self.left_sheep etc), they will be carries from cases to cases.
+Raviteja VK 
+Yes, if you have different arguments to be passed, then you can do exactly like you mentioned after the test = tests[i]. You can also put start = time.time() just before calling solve method and after that line, you can print the time taken like this : print('For ',test[0],',',test[1]," :",time.time() - start). This will be useful for further checkings and for writing the journal. For the time object, you have to import time at the start
+
+
+
+
+
+
+.
+
