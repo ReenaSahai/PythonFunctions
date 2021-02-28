@@ -1,0 +1,1132 @@
+==> even odd program
+
+
+a= int(input("enter the value of a"))
+
+if(a%2==0):
+    print("even")
+
+else:
+    print("odd")
+
+
+
+====> if else nesting (max of three numbers)
+
+
+a= int(input("enter the value of a"))
+b= int(input("enter the value of b"))
+c= int(input("enter the value of c"))
+
+
+if(a>b):
+    if(a>c):
+        print("a")
+    else:
+        print("c")
+else:
+    if(b>c):
+        print("b")
+    else:
+        print("c")
+
+
+
+===> else if ladder(grade calculation)(use = multi con / multi o/p)
+
+a= int(input("enter the value of a"))
+
+if(a>=75):
+    print("honours")
+elif(a<75 and a>=60):
+    print("I div")
+elif(a<60 and a>=50):
+    print("II div")
+elif(a<50 and a>=40):
+    print("III div")
+else:
+    print("Fail")
+
+
+==>while loop example
+a=1
+while(a<10):
+    print("Hello ")
+    a=a+1
+
+==> for loop
+
+syntex------ for i in range(start,stop(excluded),step) 
+
+for i in range(10,0,-1):
+    print(i)
+
+==>nested for
+
+for i in range(0,4):
+    for j in range(0,4):
+        print("*",end=' ')
+    print("")
+
+
+===> Functions
+functions are some reusable code
+
+--->definition(process)
+--->calling(excution)
+
+1. function without parameters
+
+def fun():
+    a =input("enter first name")
+    b= input("enter last name")
+    print(a,"  ",b)
+
+
+fun()
+
+2. function with parameters
+
+def fun(a,b):
+
+    print(a,"  ",b)
+
+
+fun('anil','kumar')
+
+
+
+
+
+3. with return type(recursion)
+
+
+def fun(a,b):
+
+    return a+b;
+
+
+def evenorodd():
+    c = fun(5,4)
+    if(c%2==0):
+        print("even")
+    else:
+        print("odd")
+
+
+evenorodd()
+
+
+
+
+OOps(object oriented programming)
+1. object
+2. class
+3. encapsulation
+4.inheritance
+5.polymorphism
+6.abstraction
+
+
+
+self keyword denotes that it is member of class.
+
+
+class A:
+    def fun(self):
+        self.a=0
+        print("Hello user")
+        print(self.a)
+    def show(self):
+        print(self.a)
+
+
+
+at  = A()
+at.fun()
+at.show()
+
+encapsulation
+
+ wrapping up of data
+
+public  - by default - accessible everywhere
+
+class A:
+
+    def f1(self):
+        self.a =2
+        print(self.a*3)
+
+class B(A):
+    def f2(self):
+        print(self.a+2)
+
+
+
+bt  = B()
+bt.f1()
+bt.f2()
+
+
+
+protected - with in the scope of class
+
+class A:
+
+    def f1(self):
+        self._a =2
+        print(self._a*3)
+
+class B(A):
+    def f2(self):
+        print(self._a+2)
+
+
+
+bt  = B()
+bt.f1()
+bt.f2()
+
+
+
+
+
+
+private -  with in the class
+
+
+class A:
+
+    def f1(self):
+        self.__a =2
+        print(self.__a*3)
+
+class B(A):
+    def f2(self):
+        print(self.__a+2)
+
+
+
+bt  = B()
+bt.f1()
+bt.f2()
+
+
+
+
+
+
+Inheritance - sharing up of data
+
+1. single(a->b) 
+
+class A:
+    def f1(self):
+        print("Hello A")
+
+class B(A):
+    def f2(self):
+        print("Hello B")
+
+
+bt  = B()
+bt.f1()
+bt.f2()
+
+
+
+
+2. multi level(a->b->c->d)
+
+class A:
+    def f1(self):
+        print("Hello A")
+
+class B(A):
+    def f2(self):
+        print("Hello B")
+
+class C(B):
+    def f3(self):
+        print("Hello C")
+
+class D(C):
+    def f4(self):
+        print("Hello D")
+
+
+bt  = D()
+bt.f1()
+bt.f2()
+bt.f3()
+bt.f4()
+
+
+3. herarical(a->b,a->c)
+
+class A:
+    def f1(self):
+        print("Hello A")
+
+class B(A):
+    def f2(self):
+        print("Hello B")
+
+class C(A):
+    def f3(self):
+        print("Hello C")
+
+
+
+bt  = B()
+ct  = C()
+
+
+bt.f1()
+bt.f2()
+ct.f1()
+ct.f3()
+
+
+
+4. multiple(a->b,c->b)
+
+class A:
+    def f1(self):
+        print("Hello A")
+
+class B:
+    def f2(self):
+        print("Hello B")
+
+class C(A,B):
+    def f3(self):
+        print("Hello C")
+
+
+
+bt  = C()
+
+
+
+bt.f1()
+bt.f2()
+bt.f3()
+
+
+
+
+5. hybrid
+
+
+
+polymorphism
+
+data has many forms
+
+1. run time polymorphism(method overriding)
+2. compile time polymorphism(method overloading)
+
+compile time polymorphism(method overloading):-
+
+1. name of method should be same 
+2. parameters should be different  
+	a. by increasing or decreasing the number of params
+	b. by changing the data type 
+
+
+
+	class A:
+
+    def f1(self,a):
+
+        print(a)
+    def f1(self ,c,d):
+
+        print(c+d)
+
+
+
+bt  = A()
+bt.f1(2)
+bt.f1(3,4)
+
+
+
+ERROR:
+
+Traceback (most recent call last):
+
+    bt.f1(2)
+TypeError: f1() missing 1 required positional argument: 'd'
+
+
+run time polymorphism(method overriding):-
+
+1. method name same
+2. method parameters same
+3. inhertance
+
+child overrides parent
+parent(value)(ignore) -> child(value)
+
+
+class A:
+
+    def f1(self,a,b):
+
+        print(a+b)
+
+class B(A):
+    def f1(self ,c,d):
+
+        print(c*d)
+
+
+bt  = B()
+
+bt.f1(3,4)
+
+
+
+
+
+==> module(packages)
+
+firstfile.py
+
+def sum(a,b):
+    print(a+b)
+def sub(a,b):
+    print(a-b)
+def multi(a,b):
+    print(a*b)
+def div(a,b):
+    print(a/b)
+
+second.py
+
+from firstfile import *
+
+sum(3,4)
+multi(6,5)
+div(10,2)
+
+
+
+list
+
+it is a mutable data structure
+ it can store multiple type of data
+
+a = [1,2,3,4,'a',"ram",5.46]
+
+print(a)
+
+->>> indexing -numbering every  value of list
+
+----> forward indexing
+---->backward indexing
+
+
+forward indexing
+
+a = [4,5,6]
+0--4
+1----5
+2----6
+
+backward indexing
+
+-1----6
+-2----5
+-3---4
+
+
+a = [1,2,3,4]
+
+print(a[-1])
+
+
+---->slicing
+
+a = [11,22,33,44]
+
+print(a[1:])
+print(a[1:3])
+print(a[-3:-1])
+
+
+----> append
+
+a = [11,22,33,44,55,66]
+a.append(456)
+print(a)
+
+
+---->sort
+
+a = [121,272,33,44,55,66]
+a.sort()
+print(a)
+
+----->reverse
+a = [121,272,33,44,55,66]
+a.reverse()
+print(a)
+
+
+----->count(occurences)
+a = [121,272,33,44,55,66,55,121]
+b =a.count(121)
+print(b)
+
+
+---->len
+
+a = [121,272,33,44,55,66,55,121]
+b =len(a)
+print(b)
+
+----> min
+a = [121,272,33,44,55,66,55,121]
+b =min(a)
+print(b)
+
+
+---->max
+
+a = [121,272,33,44,55,66,55,121]
+b =max(a)
+print(b)
+
+
+-----> concate
+a = [121,272,33,44,55,66,55,121]
+b = [121,5,121]
+
+
+
+c = a+b
+print(c)
+
+
+
+---->example of append
+
+list1 = [121,272,33,44,55,66,55,121]
+
+list2 = []
+
+length = len(list1)
+
+
+for i in range(0,length):
+
+
+    list2.append(list1[i]*2)
+
+print(list2)
+
+
+----->insert 
+
+list1 = [121,272,33,44,55,66,55,121]
+
+list1.insert(3,"name")
+
+
+print(list1)
+
+
+----->replace value
+
+list1 = [121,272,33,44,55,66,55,121]
+
+
+
+list1[1]=65665
+
+
+print(list1)
+
+
+----->remove
+list1 = [121,272,33,44,55,66,55,121]
+
+
+
+list1.remove(55)
+
+
+print(list1)
+
+---->pop
+
+
+list1 = [121,272,33,44,55,66,55,121]
+
+
+
+list1.pop()
+
+
+print(list1)
+
+
+----->clear
+
+list1 = [121,272,33,44,55,66,55,121]
+
+
+
+list1.clear()
+
+
+print(list1)
+
+
+
+---> delete 
+
+list1 = [121,272,33,44,55,66,55,121]
+
+
+
+del list1[2]
+
+
+print(list1)
+
+
+
+
+------->copy
+
+list1 = [121,272,33,44,55,66,55,121]
+
+
+
+list2 = list1.copy()
+
+print(list2)
+
+list2.append(234234)
+print(list2)
+
+
+
+-----> extend --- it is used to add all the elements 
+of a list to another
+
+list1 = [121,272,33,44,55,66,55,121]
+
+
+list2= []
+list2.extend(list1)
+
+print(list2)
+
+
+Tuple
+ it is a data structure used in  python 
+it is immutable
+tuple is denoted by '()' brackets
+
+
+a = (1,2,3,'sd',"wer",4.4)
+
+print(a)
+
+b= list(a)
+
+print(b)
+
+del b[3:5]
+print(b)
+
+c = tuple(b)
+print(c)
+
+
+====> Dictionary
+it is also a mutable data structure with the help of keys
+but we do not store values in it, instead of that we store pair in it
+
+pair= key, value
+dictionary is denoted by '{}' brackets
+
+
+a = {1:{"name":"ram","rolno":"101"},2:"ravi"}
+
+print(a[1]["name"])
+
+
+--->get
+
+a = {1:{"name":"ram","rolno":"101"},2:"ravi"}
+
+print(a.get(1))
+
+can use all the functions of list
+
+
+-----> from keys
+a = {1:101,2:202,3:303,4:404}
+
+
+1.
+mykey = {1,2,3,4}
+myval = 101
+
+
+b= dict.fromkeys(mykey,myval)
+print(b)
+
+2.
+
+
+b= a.fromkeys(a)
+print(b)
+
+3.
+mykey = {1,2,3,4}
+myval = [101]
+
+myval.append(102)
+b= dict.fromkeys(mykey,myval)
+
+print(b)
+
+
+----> to see all values and key
+
+a = {1:101,2:202,3:303}
+
+
+for i,j in a.items():
+    print(i,"",j)
+
+
+
+oops
+object oriented programming
+
+------------------------------------------------------------------
+features of oops
+1. object(real time entity)
+2. class(group of similar objects)
+3. encapsulation(wrapping up of data)
+4. abstraction(data hiding)
+5. inheritance(sharing up of data)
+6. polymorphism(differnt forms of data)
+
+
+# class
+class Add:
+    def fun(self):
+        print("Hello")
+
+
+# object
+
+at  = Add()
+at.fun()
+---------------------------------------------------------------------
+
+SELF KEYWORD
+---------------------------
+
+# class
+class Add:
+    def fun(self):
+        self.a = 2
+        print(self.a)
+    def rest(self):
+        print(self.a)
+
+
+# object
+
+at  = Add()
+at.fun()
+at.rest()
+print(at.a)
+
+
+
+
+--------------------------------------------------------------------------------------
+
+INHERITANCE
+-----------------------
+
+
+1. single level
+
+class A:
+    def f1(self):
+        print("Hello A")
+
+class B(A):
+    def f2(self):
+        print("Hello B")
+
+
+bt = B()
+bt.f1()
+bt.f2()
+
+
+
+
+
+2. multi level
+
+
+
+class A:
+    def f1(self):
+        print("Hello A")
+
+class B(A):
+    def f2(self):
+        print("Hello B")
+
+class C(B):
+    def f3(self):
+        print("Hello C")
+
+class D(C):
+    def f4(self):
+        print("Hello D")
+
+
+bt = D()
+bt.f1()
+bt.f2()
+bt.f3()
+bt.f4()
+
+
+3. herarchical
+
+
+class A:
+    def f1(self):
+        print("Hello A")
+
+class B(A):
+    def f2(self):
+        print("Hello B")
+
+class C(A):
+    def f3(self):
+        print("Hello C")
+
+
+bt = B()
+ct = C()
+bt.f1()
+bt.f2()
+ct.f1()
+ct.f3()
+
+4. multiple
+
+class A:
+    def f1(self):
+        print("Hello A")
+
+class B:
+    def f2(self):
+        print("Hello B")
+
+class C(A,B):
+    def f3(self):
+        print("Hello C")
+
+
+
+ct = C()
+
+ct.f1()
+ct.f2()
+ct.f3()
+
+
+
+5. hybrid
+
+class A:
+    def f1(self):
+        print("Hello A")
+
+class B(A):
+    def f2(self):
+        print("Hello B")
+
+class C(A):
+    def f3(self):
+        print("Hello C")
+
+class D(B,C):
+    def f4(self):
+        print("Hello D")
+
+
+
+ct = D()
+
+ct.f1()
+ct.f2()
+ct.f3()
+ct.f4()
+
+-----------------------------------------------------------------------------
+
+Module
+
+1. module using function
+
+oops.py
+
+def sum(a,b):
+    return a+b
+
+def sub(a,b):
+    return a-b
+
+def multi(a,b):
+    return a*b
+
+def divide(a,b):
+    return a/b
+
+def fact(a):
+    f = 1
+    for i in range(1,a+1):
+        f = f*i
+    return f
+
+
+first.py
+# app1 is the name of the package
+
+from app1.oops import *
+
+
+a = sum(3,4)
+print(a)
+
+
+2. Module using oops
+
+
+oops.py
+
+
+class Calculator:
+    def sum(self,a,b):
+        return a+b
+
+    def sub(self,a,b):
+        return a-b
+
+    def multi(self,a,b):
+        return a*b
+
+    def divide(self,a,b):
+        return a/b
+
+class Maths:
+
+    def fact(self,a):
+        f = 1
+        for i in range(1,a+1):
+            f = f*i
+        return f
+
+
+
+first.py
+
+
+from app1.oops import *
+
+ct = Calculator()
+print(ct.sum(2,3))
+
+
+mt = Maths()
+print(mt.fact(2))
+
+
+---------------------------------------------------------------------------------
+
+ENCAPSULATION
+
+-----------------------
+
+public
+---- used anywhere
+
+a=2
+
+
+
+protected
+------ used in same program
+_a=2
+
+
+private
+------ used in the same class
+__a =2
+
+
+
+polymorphism
+
+
+------ function overriding
+
+---- function name is similar
+---- parmeters similar
+---- inheritance
+
+
+class Calculator:
+    def sum(self,a,b):
+        return a+b
+
+
+class Maths(Calculator):
+    def sum(self,a,b):
+        return a*b
+    
+    
+mt = Maths()
+mt.sum(3,4)
+
+    
+
+
+strings
+
+
+1.  creatings strings
+
+a='the user is good'
+
+print(a)
+
+2. selecting a charcter
+
+a='the user is good'
+
+print(a[2])
+
+
+3. slicing 
+
+a='the user is good'
+
+print(a[0:3])
+
+
+
+* concatenation works just similar to normal varibles
+
+
+4. capitalize
+
+a='the user is good'
+
+print(a.capitalize())
+
+
+5. split
+
+a='Hello #mayank #ankit #amit'
+
+b =[]
+for i in a:
+    for j in  range(1,4):
+        c=a.split('#')[j]
+        b.append(c)
+
+
+
+print(b)
+
+
+
+6. center
+
+
+a='i have a good question'
+
+print(a.center(40,'-'))
+
+
+7. count
+
+a='i have a good question'
+
+print(a.count('a',0,10))
+
+
+
+8. find
+
+a='i have a good question'
+
+print(a.find('oo'))
+
+
+
+8. index
+
+a='i have a good question'
+
+print(a.index('oo'))
+
+
+9. is alphabet 
+a='i have a good question'
+
+print(a.isalpha())
+
+10. uppercase
+
+a='i have a good question'
+
+print(a.upper())
+
+
+11. lowercase
+
+a='i have a good question'
+
+print(a.lowercase())
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
