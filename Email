@@ -28,7 +28,7 @@ def send_email(from_email:'i.e. Test<Test@gmail.com> '
     ,plaintxt:'Enter a string for the email body'
     ,htmltxt:'html text.  If missing then no html text'=None
     ,filename:'enter the filename as a string'=None):
-    econn = smtplib.SMTP("smtprelayint.hban.us", 25)
+    econn = smtplib.SMTP("mail.altryx.com", 25)
     econn.ehlo()
     econn.starttls()
     msg = MIMEMultipart("alternative")
