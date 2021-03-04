@@ -1,0 +1,50 @@
+import smtplib
+from os.path import basename
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.application import MIMEApplication  
+from email.mime.image import MIMEImage 
+ 
+def _htmlstyle():
+    css=""" 
+    <style type="text/css">
+        .tg  {border-collapse:collapse;border-spacing:0;}
+        .tg td{font-family:Arial, sans-serif;font-size:14px;padding:3px 20px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
+        .tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:3px 20px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
+        .tg .tg-c4ww{background-color:#cbcefb;border-color:inherit;text-align:center;vertical-align:top}
+        .tg .tg-8m8h{font-weight:bold;background-color:#cbcefb;border-color:inherit;text-align:center;vertical-align:top}
+        .tg .tg-c3ow{border-color:inherit;text-align:center;vertical-align:top}                                                                                                                                         
+        .tg .tg-7btt{font-weight:bold;border-color:inherit;text-align:center;vertical-align:top}
+        .tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+        .tg .tg-61xu{background-color:#cbcefb;border-color:inherit;text-align:left;vertical-align:top}                                                                                       
+    </style>
+    """
+    return css
+ 
+def send_email(from_email:'i.e. Test<Test@gmail.com> '
+    ,to_list:"['sahai.reena@gmail.com']"
+    ,cc_list:"['sahai.reena@gmail.com']"
+    ,subject:'Enter a string for the subject'
+    ,plaintxt:'Enter a string for the email body'
+    ,htmltxt:'html text.  If missing then no html text'=None
+    ,filename:'enter the filename as a string'=None):
+    econn = smtplib.SMTP("smtprelayint.hban.us", 25)
+    econn.ehlo()
+    econn.starttls()
+    msg = MIMEMultipart("alternative")
+    msg['Subject'] = subject
+    msg['From'] = from_email
+    msg['To'] = ','.join(to_list)
+    msg['CC'] = ','.join(cc_list)
+    to_addrs = to_list + cc_list
+    msg.attach(MIMEText(plaintxt, 'plain'))
+    if htmltxt:msg.attach(MIMEText(_htmlstyle() +htmltxt, 'html'))
+    else:msg.attach(MIMEText(_htmlstyle() +f"<br>{plaintxt}</br>", 'html'))
+    if filename:
+        with open(filename, "rb") as fil:
+            part = MIMEApplication(fil.read(),Name=basename(filename))
+        part['Content-Disposition'] = f'attachment; filename="{basename(filename)}"' 
+        msg.attach(part)
+    econn.sendmail(from_email, to_addrs, msg.as_string())
+    econn.quit()
+    return
