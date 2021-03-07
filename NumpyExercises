@@ -333,6 +333,13 @@ print(arr)
 or
 array[array>number]
 
+Tile fundtion
+import  numpy as np
+
+a = np.array([0, 1, 2])
+
+
+print(np.tile(a, (4, 4)))  **** # of rows, number of times repeat
 
 import numpy as np
 
@@ -360,6 +367,17 @@ universal function
 2.np.exp(array)
 3.np.sin(array)
 4.np.log(array)
+
+
+import  numpy as np
+
+a = np.array([0, 1, 2])
+
+
+print(np.tile(a, (2, 3, 2)))
+(2,3,2)--->(i,j,k)
+1st -> no of values in array *k*j
+total 1st *i
 
 exercises
 
