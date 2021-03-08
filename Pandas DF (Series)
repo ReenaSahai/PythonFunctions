@@ -1,0 +1,144 @@
+1. import
+import numpy as np
+import pandas as pd
+
+2.creating series by list
+pd.Series(data=list_name)
+
+ex:-
+import numpy as np
+import pandas as pd
+
+a = [4,8,6]
+b = ['a','b','c']
+
+ser = pd.Series(data=a,index=b)
+print(ser)
+
+
+3. creating index of series
+pd.Series(data =list1 , index=list2)
+
+or
+
+pd.Series(list1,list2)
+
+
+example:
+
+import  numpy as np
+import pandas as pd
+
+
+a = [1,2,3,54]
+i = ['a','b','c','d']
+
+ser = pd.Series(data=a,index=i)
+print(ser)
+
+4. Creating Series with numpy array
+pd.series(numpyarray)
+
+or
+
+pd.series(numpyarray,list for index)
+
+import  numpy as np
+import pandas as pd
+
+
+a = np.array([1,2,3,4,5])
+
+ser = pd.Series(a)
+print(ser)
+
+
+.........
+
+import  numpy as np
+import pandas as pd
+
+
+a = np.array([1,2,3,4,5])
+
+ser = pd.Series(a,index=[6,5,4,3,2])
+print(ser)
+.........
+
+5.Creating Series with dictionary
+
+pd.Series(dictionary name)
+...........
+import  numpy as np
+import pandas as pd
+
+
+a = {'a':1,'b':2}
+
+ser = pd.Series(a)
+print(ser)
+
+..........
+
+6. Storing built - in functions in series
+
+pd.Series(data=[sum,print,len,etc])
+.................
+import  numpy as np
+import pandas as pd
+
+
+a = [1,2,3,4,5,6]
+
+ser = pd.Series(data=[sum(a),max(a),min(a)])
+print(ser)
+.......................
+7. accessing values in series
+pd.Series([data],[index])
+
+ser['index']
+
+....................
+import  numpy as np
+import pandas as pd
+
+
+a = [1,2,3,4,5,6]
+
+ser = pd.Series(data=[sum(a),max(a),min(a)])
+print(ser[1])
+
+...................
+
+8. adding to series
+ser1+ser2
+
+...........
+import  numpy as np
+import pandas as pd
+
+
+a = [1,2,3,4,5,6]
+b = [5,4,6,7,4]
+
+ser = pd.Series(data=[sum(a),max(a),min(a)])
+
+ser1 = pd.Series(data=[sum(b),max(b),min(b)])
+print(ser+ser1)
+...........................
+
+
+
+ 
+
+
+import numpy as np
+import pandas as pd
+
+df = pd.DataFrame(data=[[34,56],[78,56]],index=['a','b'],columns=['x','y'])
+print(df)
+
+
+
+
+
