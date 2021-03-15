@@ -1,0 +1,362 @@
+1. creating numpy using list
+example:-
+import numpy as np
+
+a = [1,2,3,5]
+
+arr = np.array(a)
+print(arr)
+
+
+2.create 2-d numpy from 2-d list
+
+example:-
+import numpy as np
+
+a = [[1,2],[3,5]]
+
+arr = np.array(a)
+print(arr)
+
+3. np.arange(start ,stop ,step)
+
+example:-
+import numpy as np
+
+
+arr = np.arange(1,10,2,dtype=complex)
+print(arr)
+
+
+4.np.zeros(no. of zeros needed)
+
+example:-
+
+import numpy as np
+
+arr = np.zeros(10,dtype=int)
+print(arr)
+
+
+5.np.zeros((row,col))
+
+import numpy as np
+
+arr = np.zeros((2,3),dtype=int)
+print(arr)
+
+6.np.ones(no. of elements)
+
+example:-
+import numpy as np
+
+arr = np.ones(10,dtype=int)
+print(arr)
+
+7.np.ones((row,col ))
+
+example:-
+
+import numpy as np
+
+arr = np.ones((2,3),dtype=int)
+print(arr)
+
+
+8.np.linspace(start, stop ,no. of values)
+
+example:-
+import numpy as np
+
+arr = np.linspace(1,10,6)
+print(arr)
+
+
+9.np.eye(no. of rows and cols)
+Identity matrix
+
+import numpy as np
+
+arr = np.eye(2,dtype=int)
+print(arr)
+
+
+10.np.random.rand(number)
+random number between 0 and 1
+
+example:-
+import numpy as np
+
+arr = np.random.rand(10)
+print(arr)
+
+
+11. np.random.rand(row,col)
+
+example:-
+
+import numpy as np
+
+arr = np.random.rand(4,4)
+print(arr)
+
+12.np.random.randn(number)
+normal distribution around zero
+
+example:-
+import numpy as np
+
+arr = np.random.randn(4)
+print(arr)
+
+
+
+13.np.random.randn(row,col)
+
+example:-
+import numpy as np
+
+arr = np.random.randn(4,4)
+print(arr)
+
+14.np.random.randint(low,high,number)
+
+example:-
+
+import numpy as np
+
+arr = np.random.randint(2,20,50)
+print(arr)
+
+
+15. by random number np.reshape(row,col)
+example:-
+
+
+import numpy as np
+
+arr = np.random.randint(2,20,50)
+
+arr = arr.reshape(10,5)
+print(arr)
+
+16.array.max()
+
+example:-
+import numpy as np
+
+np.random.seed(101)
+
+arr = np.random.randint(2,20,50)
+a = np.max(arr)
+
+print(a)
+print(arr)
+
+
+17.array.min()
+
+example:-
+import numpy as np
+
+np.random.seed(101)
+
+arr = np.random.randint(2,20,50)
+a = np.min(arr)
+
+print(a)
+print(arr)
+
+
+18.array.argmax() - index value of max value
+
+example:-
+import numpy as np
+
+np.random.seed(101)
+
+arr = np.random.randint(2,20,50)
+a = np.argmax(arr)
+
+print(a)
+print(arr)
+
+
+19.array.argmin() - index of min value
+
+example:-
+import numpy as np
+
+np.random.seed(101)
+
+arr = np.random.randint(2,20,50)
+a = np.argmin(arr)
+
+print(a)
+print(arr)
+
+20.array.shape
+
+example:-
+import numpy as np
+
+np.random.seed(101)
+
+arr = np.random.randint(2,20,50)
+a = np.shape(arr)
+
+print(a)
+print(arr)
+
+21.array.dtype
+
+example:-
+
+import numpy as np
+
+np.random.seed(101)
+
+arr = np.random.randint(2,20,50)
+a = arr.dtype
+
+print(a)
+print(arr)
+
+Indexing and Selection
+
+1.array[index]
+
+example:
+
+import numpy as np
+a=[1,2,3]
+arr=np.array(a)
+print(arr[1])
+
+2.array[start:end]
+
+example:
+
+import numpy as np
+a=[1,2,3,4,5,6,7,8,9]
+arr=np.array(a)
+print(arr[1:5])
+
+3.array[:end]- default start 0
+
+example:
+
+import numpy as np
+a=[1,2,3,4,5,6,7,8,9]
+arr=np.array(a)
+print(arr[:5])
+
+4.array[start:] - default end complete
+
+example:
+
+import numpy as np
+a=[1,2,3,4,5,6,7,8,9]
+arr=np.array(a)
+print(arr[0:])
+
+5.array[start:end] = number - repalce the values
+array1 = arraymain[start:end]
+
+example:
+
+import numpy as np
+a=[1,2,3,4,5,6,7,8,9]
+arr=np.array(a)
+arr[1:4]=11
+print(arr)
+
+6.array[:] = number
+
+example:
+
+import numpy as np
+a=[1,2,3,4,5,6,7,8,9]
+arr=np.array(a)
+arr[:]=11
+print(arr)
+
+7.array.copy()
+
+example:
+
+import numpy as np
+a=[1,2,3,4,5,6,7,8,9]
+arr=np.array(a)
+b=arr.copy()
+print(b)
+
+2-d array
+
+1.array[row][col]
+2.array[row,col]
+3.array[row1:row2,col1:col2]
+
+example:
+
+import numpy as np
+
+np.random.seed(101)
+
+arr=np.random.randint(10,100,(5,5))
+print(arr)
+print("----------------------")
+print(arr[1:3,1:3])
+
+
+
+conditional selection 
+
+1.boolean array = array>number
+return boolan values
+
+
+example:
+import numpy as np
+
+np.random.seed(101)
+
+arr=np.random.randint(10,100,(5,5))
+print(arr)
+print("---------Operation Result-------------")
+
+arr = arr<50
+print(arr)
+
+
+2.array[boolean array]
+or
+array[array>number]
+
+
+import numpy as np
+
+np.random.seed(101)
+
+arr=np.random.randint(10,100,(5,5))
+print(arr)
+print("---------Operation Result-------------")
+
+
+print(arr[arr<50])
+
+
+Numpy operations
+
+1. array+array
+2.array-array
+3.array*array
+4.array+-*/number
+5.array**number
+
+universal function
+
+1.np.sqrt(array)
+2.np.exp(array)
+3.np.sin(array)
+4.np.log(array)
