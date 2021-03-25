@@ -157,6 +157,232 @@ print(default_order)
 
 
 
+Python Strings
+
+single line string
+
+# defining strings in Python
+# all of the following are equivalent
+my_string = 'Hello'
+print(my_string)
+
+my_string = "Hello"
+print(my_string)
+
+my_string = '''Hello'''
+print(my_string)
+
+# triple quotes string can extend multiple lines
+my_string = """Hello, welcome to
+           the world of Python"""
+print(my_string)
+
+
+-------------------------------
+
+#Accessing string characters in Python
+str = 'Hello User'
+print(str)
+
+#first character (forward indexing)
+print(str[0])
+
+#last character (backward indexing)
+print(str[-1])
+
+#slicing 2nd to 5th character (forward slicing)
+print(str[1:5])
+
+#slicing 6th to 2nd last character (backward slicing)
+print(str[5:-2])
+
+---------------------------------
+
+Operations
+
+# Python String Operations
+str1 = 'Hello'
+str2 ='World!'
+
+# using +
+print(str1 + str2)
+
+# using *
+print(str1 * 3)
+
+................................
+
+# Iterating through a string
+count = 0
+for letter in 'Hello World':
+    if(letter == 'l'):
+        count += 1
+print(count,'letters found')
+
+.................................
+
+Check existence of a sub string in a string
+
+print('H' in "hello")
+.......................................
+
+1. enumerate()	
+
+It converts a string into a data structure i.e. list , tuple, dict
+but it returns every alphabet in a key and value format i.e. k,v
+
+eg:-
+
+a = 'hello'
+str = list(enumerate(a))
+print(str)
+
+output:-
+
+[(0, 'h'), (1, 'e'), (2, 'l'), (3, 'l'), (4, 'o')]
+
+
+
+2. len()----> length of string
+
+3. always use '' inside "" and vice versa
+
+a = "Hello 'Ram','Ravi'"
+
+print(a)
+
+
+4. format ----> output format
+
+
+default_order = "{}, {} and {}".format('John','Bill','Sean')
+
+print(default_order)
+
+
+----------------------------------------------
+
+
+String Methods
+
+1. capitalize()	Converts the first character to upper case
+
+
+txt = "hello, and welcome to my world."
+x = txt.capitalize()
+print (x)
+
+
+2. casefold()	Converts string into lower case
+
+txt = "Hello, And Welcome To My World!"
+
+x = txt.casefold()
+
+print(x)
+
+3. count()	Returns the number of times a specified value occurs in a string
+
+txt = "I love apples, apple are my favorite fruit"
+
+x = txt.count("apple")
+
+print(x)
+
+4. encode()	Returns an encoded version of the string
+
+
+txt = "My name is Ståle"
+
+x = txt.encode()
+
+print(x)
+
+5.  endswith()	Returns true if the string ends with the specified value
+
+
+txt = "Hello, welcome to my world."
+
+x = txt.endswith(".")
+
+print(x)
+
+
+6. The find() method finds the first occurrence of the specified value.
+
+
+txt = "Hello, welcome to my world."
+
+x = txt.find("welcome")
+
+print(x)
+
+
+7.  The index() method finds the first occurrence of the specified value.
+
+The index() method is almost the same as the find() method, the only difference is that the find() method returns -1 if the value is not found.
+
+
+txt = "Hello, welcome to my world."
+
+x = txt.index("welcome")
+
+print(x)
+
+
+8. The join() method takes all items in an iterable and joins them into one string.
+
+
+a = ['r','e','e','n','a']
+
+b = "".join(a)
+print(b)
+
+9. strip, lstrip, rstrip
+
+lstrip -->Returns a left trim version of the string
+rstrip--->Returns a right trim version of the string
+strip--->Returns a left and right trim version of the string
+
+
+
+
+
+txt = "     banana     "
+
+x = txt.strip()
+
+print("of all fruits", x, "is my favorite")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
