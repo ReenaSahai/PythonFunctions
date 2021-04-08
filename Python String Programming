@@ -355,6 +355,89 @@ x = txt.strip()
 print("of all fruits", x, "is my favorite")
 
 
+10. replace() 
+
+--->Returns a string where a specified value is replaced with a specified value
+
+
+txt = "I like bananas"
+
+x = txt.replace("bananas", "apples")
+
+print(x)
+
+
+11. rfind()
+
+--->Searches the string for a specified value and returns the last position of where it was found
+
+txt = "Mi casa, su casa."
+
+x = txt.rfind("casa")
+
+print(x)
+
+
+12. split()
+
+--->Splits the string at the specified separator, and returns a list
+
+txt = "welcome to the jungle"
+
+x = txt.split()
+
+print(x)
+
+
+13. swapcase()
+
+---->Swaps cases, lower case becomes upper case and vice versa
+
+txt = "Hello My Name Is PETER"
+
+x = txt.swapcase()
+
+print(x)
+
+14. title()
+
+--->Converts the first character of each word to upper case
+
+
+txt = "Welcome to my world"
+
+x = txt.title()
+
+print(x)
+
+
+
+15. translate()
+
+--->Returns a translated string
+
+
+#use a dictionary with ascii codes to replace 83 (S) with 80 (P):
+mydict = {83:  80}
+
+txt = "Hello Sam!"
+
+print(txt.translate(mydict))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
