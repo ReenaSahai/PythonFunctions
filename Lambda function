@@ -1,0 +1,4 @@
+ 
+Ex for a calculator button, each button has its own function
+x = lambda b:b
+print(x(4))
