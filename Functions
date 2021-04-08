@@ -1,0 +1,76 @@
+Functions   02-02-2021
+•	It is a reusable code
+•	It is a group of statements
+Naming conventions
+1. name should start with alphabet(Lowercase)
+2. camel case rule(getMyHome)
+3. No spaces in between(use _ underscore)
+Steps
+1. definition(process)
+2. calling(execution)
+def nameOfFunction()
+	................
+	...............
+
+nameOfFunction()
+
+()---->parameter box
+
+
+=> Types of function
+
+1. function without parameter(where parameter box is empty)
+2. function with parameter
+
+def getMyHomeAddress(a,b):
+    c =a+b
+    print(c)
+
+
+x = int(input())
+y = int(input())
+
+getMyHomeAddress(x,y)
+getMyHomeAddress(8,9)
+
+
+def getMyHomeAddress(a,b,op):
+    if(op=="+"):
+        print(a+b)
+    if (op == "-"):
+        print(a - b)
+    if (op == "*"):
+        print(a * b)
+    if (op == "/"):
+        print(a // b)
+
+getMyHomeAddress(4,2,"/")
+
+***************************************       
+for i in range(1,5):
+    for j in range(i,5):
+        print(" ",end='')
+    for j in range(0,2*i-1):
+        print("*",end='')
+    print("")
+
+def fact(n):
+    if(n==0 or n==1):
+        return 1
+    else:
+        return n*fact(n-1)
+
+x = fact(5)
+print(x)
+ 
+
+def tab(n, i):
+    if (i == 1):
+        return n
+    else:
+        return n + tab(n, i - 1)
+
+
+for i in range(1,11):
+    x = tab(51, i)
+    print(x)
