@@ -3,7 +3,27 @@ Ex for a calculator button, each button has its own function
 x = lambda b:b
 print(x(4))
 
+  
+def fun (a,b)
+ return a+b
+ 
+x=fun(3,4)
+print(x)
 
+Instead of that we can use:
+
+Ex2
+x = lambda a,b:a+b
+print(x(3,4))
+
+Ex1
+x = lambda a:a*10
+print(x(4))
+
+
+Ex for a calculator button, each button has its own function
+x = lambda b:b
+print(x(4))
 
 x = lambda a,b,c : a+b+c
 print(x(5,6,2))
