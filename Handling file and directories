@@ -1,0 +1,226 @@
+*****************************Python directories and file management******************
+
+Python Directory and Files Management
+
+--------------------
+Python Directory
+-------------------
+
+1. Get Current Directory
+
+import os
+
+print(os.getcwd())
+
+
+2. Changing Directory
+
+import os
+
+os.chdir("C:\\Users")
+print(os.getcwd())
+
+
+
+3. List Directories and Files
+
+import os
+
+
+print(os.listdir("E:\\"))
+print(os.listdir())
+
+
+
+4. Making a New Directory
+
+
+
+import os
+
+
+print(os.mkdir("New folder path"))
+
+
+5.  Renaming a Directory or a File
+
+import os
+
+
+print(os.rename("old_name","new_name"))
+
+
+6. Removing Directory or File
+
+==>for file
+
+import os
+
+
+print(os.remove("file.csv"))
+
+==>for dir
+
+import os
+
+
+---->if the dir is blank
+print(os.rmdir("new_folder"))
+
+
+----> if not blank
+
+shutil.rmtree("folder_name")
+
+
+
+File handling in python
+
+
+Hence, in Python, a file operation takes place in the following order:
+
+Open a file
+Read or write (perform operation)
+Close the file
+
+
+1. Opening Files in Python
+
+The key function for working with files in Python is the open() function.
+
+The open() function takes two parameters; filename, and mode.
+
+"r" - Read - Default value. Opens a file for reading, error if the file does not exist
+
+"a" - Append - Opens a file for appending, creates the file if it does not exist
+
+"w" - Write - Opens a file for writing, creates the file if it does not exist
+
+
+f = open("F:\\reena","r")
+
+
+2. Read a complete file
+
+f = open("F:\\reena\\Python file management.txt","r")
+print(f.read())
+
+
+3. Read Only Parts of the File
+
+f = open("demofile.txt", "r")
+print(f.read(5))
+
+4. Read Lines
+You can return one line by using the readline() method:
+
+f = open("demofile.txt", "r")
+print(f.readline())
+
+
+or
+
+
+f = open("demofile.txt", "r")
+for x in f:
+  print(x)
+
+
+  5. Close Files
+
+  f = open("demofile.txt", "r")
+print(f.readline())
+f.close()
+
+
+6. Write to an Existing File
+
+f = open("demo.txt","w")
+f.write("Hello")
+f.close()
+
+w, x, a ---> to create empty file
+
+
+7. Delete a File
+
+import os
+os.remove("demofile.txt")
+
+8. Check if File exist:
+
+import os
+if os.path.exists("demofile.txt"):
+  os.remove("demofile.txt")
+else:
+  print("The file does not exist")
+
+
+
+
+
+def split(word):
+    return [char for char in word]
+
+# Driver code
+word = '123456789'
+s1 = split(word)
+
+# Driver code
+word2 = '123456789'
+s2 = split(word2)
+
+
+score = 0
+# lenght of both strings
+l1 = len(s1)
+l2 = len(s2)
+len_diff1 = l1 - l2
+if(l1==l2 or abs(len_diff1) >=2 ):
+
+    print("l1 = ",l1)
+    print("l2 = ",l2)
+
+    if(l1<=l2):
+        sub_len = l1
+    else:
+        sub_len = l2
+
+    print(sub_len)
+    c = 0
+    for i in range(0,sub_len):
+        if(s1[i]==s2[i]):
+            c = c +1
+    print(c)
+
+    # position matching m
+
+    if(c==sub_len):
+        score = 100
+
+    per = (l1/l2)*100
+    print(per)
+    diff= 100-per
+    print(diff)
+
+
+    finalscore = score-diff
+    print(finalscore)
+
+len_diff = l1 - l2
+
+if(len_diff==1 or len_diff == -1 ):
+
+    sublen = 0
+    d = 0
+
+    if(l1<=l2):
+        sublen = l1
+    else:
+        sublen = l2
+
+    for i in range(0,sublen):
+        if(s1[i]==s2[i] or s1[i]==s2[i+1]):
+            d = d +1
+
+    print(d)
