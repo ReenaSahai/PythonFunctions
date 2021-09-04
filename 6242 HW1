@@ -1,0 +1,57 @@
+#Get_movie_credits
+import http.client
+import json
+limit = 5
+exclude_ids =[100,101,102, 287,819]
+conn = http.client.HTTPSConnection("api.themoviedb.org")
+conn.request("GET","/3/movie/550/credits?api_key=2ee7f0cd416e058b7f3f574720018ff2&language=en-US")
+result = conn.getresponse()
+
+print(result.status, result.reason)
+data = result.read()
+jobj = json.loads(data)
+print(jobj["cast"][1]['order'])
+print((jobj))
+exclude_curr = []
+for i in exclude_ids:
+
+    for j in range(0,limit):
+
+        if (jobj["cast"][j]["id"]) ==i:
+
+            exclude_curr.append(jobj["cast"][j]['id'])
+            # print(jobj["cast"][j]['name'])
+            # print(exclude_curr)
+
+for j in range(0, limit):
+    if jobj["cast"][j]['id'] not in exclude_curr:
+        #for t in range (0, len(jobj["cast"])):
+        print(jobj["cast"][j])
+        
+        
+       *******************************************
+       #Get Person credits
+import http.client
+import json
+"""
+    Using the TMDb API, get the movie credits for a person serving in a cast role
+    documentation url: https://developers.themoviedb.org/3/people/get-person-movie-credits
+
+    :param string person_id: the id of a person
+    :param vote_avg_threshold: optional parameter to return the movie credit if it is >=
+        the specified threshold.
+        e.g., if the vote_avg_threshold is 5.0, then only return credits with a vote_avg >= 5.0
+    :rtype: list
+        return a list of dicts, one dict per movie credit with the following structure:
+            [{'id': '97909' # the id of the movie credit
+            'title': 'Long, Stock and Two Smoking Barrels' # the title (not original title) of the credit
+            'vote_avg': 5.0 # the float value of the vote average value for the credit}, ... ]
+"""
+threshold = 8.2
+conn = http.client.HTTPSConnection("api.themoviedb.org")
+conn.request("GET", "/3/person/287/movie_credits?api_key=2ee7f0cd416e058b7f3f574720018ff2&language=en-US")
+result = conn.getresponse()
+
+print(result.status, result.reason)
+data = result.read()
+jobj = json.loads(data)
