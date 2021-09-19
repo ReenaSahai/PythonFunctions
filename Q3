@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<!-- cse6242 -->
+
+<!-- run: http-server & -->
+
+<head>
+  <title>Running Total of TMDb Movies by Year</title>
+  <!-- define CSS rules -->
+  <style>
+     .bar {
+            fill: blue;
+        }
+  </style>
+  
+</head>
+
+<body>
+
+  <script src="lib/d3/d3.min.js"></script>
+  <script src="lib/d3-dsv/d3-dsv.min.js"></script>
+  <script src="lib/d3-fetch/d3-fetch.min.js"></script>
+
+  <script>
+    // define the dimensions and margins for the graph
+    var margin = {top: 20, right: 20, bottom: 70, left: 60},
+    width = 960 - margin.left - margin.right,
+    height = 600 - margin.top - margin.bottom;
+	  
+
+    //parsing Year 
+
+    var tparser = d3.timeParse("%Y");
+
+
+    // append svg element to the body of the page
+    // set dimensions and position of the svg element
+    var svg = d3.select("body")
+                .append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                .attr("transform",
+                    "translate(" +margin.left+ "," + margin.top + ")");
+
+    
+    // Get the data
+	  var pathToCsv = "q3.csv";		// path to csv
+	
+    d3.dsv(",", pathToCsv, function (d) {      
+      return {
+        // format data attributes if required
+        year : d.year,
+        running_total: d.running_total
+      }
+    }).then(function (data) {
+      
+      // you should see the data in your browser's developer tools console 
+      console.log(data);
+      
+      // Function to get max and min date for domain
+      var minYr = 0;
+      var maxYr = 0;
+      var maxRT = 0;
+      data.forEach(function(i, index){          
+          if(index === 0)
+            minYr = i["year"];
+          else
+            minYr = Math.min(minYr, i["year"]);
+
+            maxYr =  Math.max(maxYr, i["year"]);
+            maxRT =  Math.max(maxYr, i["running_total"]);
+      });  
+      
+      minYr = new Date(minYr, 0, 1);
+      maxYr = new Date(maxYr, 0, 1);
+
+      // create scales x & y for X and Y axis and set their ranges
+
+      var xscale = d3.scaleTime()
+					.domain([minYr, maxYr])
+				 	.range([0, width]);
+
+      var xAxis = d3.axisBottom(xscale)
+					.ticks(d3.timeYear.every(10));
+
+      // Y axis 
+      var yscale = d3.scaleLinear()
+					.domain([0, maxRT])
+					.range([height ,0]);
+
+      var yAxis = d3.axisLeft(yscale);
+
+      // Add bars to svg - create new elements based on your data
+
+        svg.selectAll("mybar")
+					.data(data)
+					.enter()
+					.append("rect")
+					.attr("x", function (d) {
+						
+						return xscale(new Date(d.year));
+					})
+					.attr("y", function(d) { return yscale(d.running_total); })
+					.attr("width", 5)
+          .attr("height", function(d) { return height - yscale(d.running_total); })
+					.attr("fill", "#69b3a2");
+
+
+      // Add the X Axis
+				svg.append("g")
+					.attr("class", "axis")
+					.attr("transform", "translate("+ 50+"," + (height) + ")")
+          .attr("id", "x_axis")
+					.call(xAxis);
+
+      // Add the text label for X Axis
+
+          svg.append("text")
+          .attr("y", 540)
+          .attr("x", 500)
+          .attr("text-anchor", "end")
+          
+          .attr("font-size", "18px")
+          .attr("id", "x_axis_label")
+          .text("Year")
+          ;
+
+				  // Add the Y Axis
+				svg.append("g")
+					.attr("class", "axis")
+          .attr("id", "y_axis")
+					.attr("transform", "translate(" + 50 + ",0)")
+					.call(yAxis);
+        
+
+          // Add the text label for Y axis
+          svg.append("text")
+          .attr("transform", "rotate(-90)")
+          .attr("y",0)
+          .attr("x", -150)
+          .attr("text-anchor", "end")
+          
+          .attr("font-size", "18px")
+          .attr("id", "y_axis_label")
+          .text("Running Total");
+
+       //Adding GTUsername
+       svg.append("text")
+        .attr("x", width-30)
+        .attr("y", height + 50)
+        .attr("text-anchor", "middle")
+        .attr("id", "credit")
+        .style("font-size", "18px")
+        .text("rsahai6");
+
+       //Add the bar chart title
+       svg.append("text")
+        .attr("transform", "translate(200,0)")
+        .attr("x", (width / 6))
+        .attr("y", 0)
+        .attr("font-size", "24px")
+        .attr("stroke", "black")
+        .attr("id", "title")
+        .text("Running Total of TMDb Movies by Year")
+
+				
+        
+    }).catch(function (error) {
+      console.log(error);
+    });
+
+  </script>
+
+</body>
