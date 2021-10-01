@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+
+<head>
+  <title>Line Charts</title>
+  <meta charset="utf-8">
+
+  <script type="text/javascript" src="../lib/d3.v5.min.js"></script>
+  <!-- <script type="text/javascript" src="../lib/d3-scale-chromatic.v1.min.js"></script> -->
+</head>
+
+<body>
+  <div id='credit'>rsahai6</div>
+
+  <script> 
+   // define the dimensions and margins for the graph
+  var margin = {top: 30, right: 30, bottom: 70, left: 50},
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+   // appending the svg object 
+var svg1 = d3.select("body")
+  .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform",
+          "translate(" + 50 + "," + 30 + ")");
+
+  
+ var legend1 = svg1.append()
+  .attr("class","legend1")
+  .attr("transform","translate(" + (width + margin.right) + "," + (margin.top) + ")")
+
+
+
+
+ //var pathToCsv = "boardgame_ratings.csv";   // path to csv
+ //var tparse =d3.timeFormat("%B %d, %Y");
+ //var parseTime = d3.time.format("%Y.%m.%d").parse;
+
+//var max = d3.max(data, function(d){ return parseTime(d.date)})
+
+     d3.dsv(",", "boardgame_ratings.csv", function (d) {
+      return {
+        // format data attributes if required
+             datert : d3.timeParse("%Y-%m-%d")(d.date),
+             catanrt: d['Catan=count'],
+             Dominionrt : d["Dominion=count"],
+             Codenamesrt : d["Codenames=count"],
+             Terraformingrt: d["Terraforming Mars=count"],
+             Gloomhavenrt: d["Gloomhaven=count"],
+             Magicrt : d["Magic: The Gathering=count"],
+             Dixitrt: d["Dixit=count"],
+             Monopolyrt : d["Monopoly=count"]
+
+            
+      };
+    }).then(function (values){
+    	const ratings = ["catanrt","Dominionrt", "Codenamesrt", "Terraformingrt","Gloomhavenrt","Magicrt","Dixitrt","Monopolyrt"];
+    	const color = ["#f7f4f9","#e7e1ef","#d4b9da","#c994c7","#df65b0","#e7298a","#fb6a4a","#ef3b2c"]
+
+           console.log(values.date)
+
+      var minDate = values[0].datert
+      var maxDate= values[45].datert
+
+      console.log(minDate)
+      console.log(maxDate)
+ 
+    //  var parseDate = d3.utcParse("%m-%dT-%Y")
+  
+      // console.log(tparse(parseDate(String(minDate))))
+      // console.log(tparse(parseDate(String(maxDate))))
+
+console.log(values)
+console.log(values.date)
+
+var rating_group =d3.nest()
+  .key(function(d) {
+    return d["catanrt"];}).sortKeys
+    (d3.descending)
+    .entries(values);
+
+      
+
+  const max_rating =rating_group[0].key
+  
+
+  console.log(max_rating)
+  console.log(values.date)
+  //console.log(d3.extent(values,function(d){reurn d.date}))
+    
+
+ var  xScale1 = d3.scaleTime()
+      .range([0, width])
+      .domain([minDate, maxDate]);
+
+     // .domain([parseInt(minDate), parseInt(maxDate)]);
+    //  .domain([[mindate, maxdate]])
+
+      //var yMax=d3.max(values,d=>d.spending)
+
+     var yScale1 = d3.scaleLinear()
+          .domain([0, parseInt(max_rating)])
+          .range([height, 0])
+
+
+    var  xAxs1= d3.axisBottom(xScale1)
+      .tickFormat(d3.timeFormat("%B,%Y"))
+       .ticks(10)
+
+    // d3.select("svg")
+    // .append("g")
+    // .attr("class", "axis")
+    // .attr("transform", "translate(0,500)")
+    // .call(xAxis)
+    // .append("text")
+    // .attr("x", (900+70)/2) 
+    // .attr("y", "50") 
+    // .text("Date")
+
+  var  yAxs1 = d3.axisLeft(yScale1)
+  //  .ticks(3)
+
+
+
+svg1.append("g")
+    .attr("class","xAxis")
+    .attr("id","xAxis1")
+    .attr("transform", "translate("+ 50+"," + (height+20) + ")") //use variable in translate
+    .call(xAxs1)
+    .append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("x", "475")
+    .attr("y", "-50")
+    .attr("text-anchor", "end")
+    .attr("id", "x_axis_label")
+    .text("Running Total")
+
+  svg1.append("g")
+    .attr("class", "yAxis")
+    .attr("id", "yAxis1")
+    .attr("transform", "translate(50,20)") //use variable in translate
+    .call(yAxs1)
+    .append("text")
+    .attr("transform", "rotate(-45)")
+    .attr("x", "150")
+    .attr("y", "-100")
+    .attr("text-anchor", "end")
+    .text("reviews")
+    //} );
+
+
+ var legend1 = svg1.append()
+  .attr("class","legend1")
+  .attr("transform","translate(" + (width + margin.right) + "," + (margin.top) + ")")
+
+
+  legend1.selectAll(".legend1")
+  .data(ratings)
+  .enter()
+  .append("text")
+  .style("width","30px")
+  .style("height","20px")
+  .attr("transform", function(d, i) {return "translate(10,"+(i*30)+")";})
+    .style("fill", function(d){
+    if (d.localeCompare("catanrt")==0){return color[0];}
+    else if (d.localeCompare("Dominionrt")==0){return color[1];}
+    else if (d.localeCompare("Codenamesrt")==0){return color[2];}
+    else if (d.localeCompare("Terraformingrt")==0){return color[3];}
+    else if (d.localeCompare("Gloomhavenrt")==0){return color[4];}
+    else if (d.localeCompare("Magicrt")==0){return color[5];}
+    else if (d.localeCompare("Dixitrt")==0){return color[6];}
+    else if (d.localeCompare("Monopolyrt")==0){return color[7];}
+  });
+
+  svg1.append("text")
+     .attr("class","title")
+  .text("Number of Ratings 2016-2020")
+   .style("font-size", "30px")
+   .attr("transform", "translate(400,20)")
+
+
+  legend1.selectAll(".legend1text")
+  .data(ratings)
+  .enter()
+  .append("text")
+  .attr("transform", function(d, i) {return "translate(55,"+(i*30+15)+")";})
+  .text(function(d) {return d;});
+
+var plotchart1= svg1.append("g")
+   .attr("transform","translate(40,8)");
+
+ratings.forEach(function(value){
+  var line1 = d3.line()
+      .x(function(d){ return xScale1(d.datert) ;})
+       .y(function(d){return yScale1(d[value]);})
+       .curve(d3.curveMonotoneX);
+ 
+
+  plotchart1.append("path")
+  .datum(values)
+  .attr("class", "path")
+  .attr("d", line1)
+  .attr("fill", "none")
+  .style("stroke-width", 2)
+   .style("stroke", function(d){
+    if (value.localeCompare("catanrt")==0){return color[0];}
+    else if (value.localeCompare("Dominionrt")==0){return color[1];}
+    else if (value.localeCompare("Codenamesrt")==0){return color[2];}
+    else if (value.localeCompare("Terraformingrt")==0){return color[3];}
+    else if (value.localeCompare("Gloomhavenrt")==0){return color[4];}
+    else if (value.localeCompare("Magicrt")==0){return color[5];}
+    else if (value.localeCompare("Dixitrt")==0){return color[6];}
+    else if (value.localeCompare("Monopolyrt")==0){return color[7];}
+  });
+ 
+})
+
+
+    });
+
+
+
+
+
+
+
+
+  </script>
+</body>
