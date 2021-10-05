@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<head>
+  <title>Games Rating: 2015 - 2019</title>
+  <meta charset="utf-8">
+  <script type="text/javascript" src="../lib/d3.v5.min.js"></script>
+  <script type="text/javascript" src="../lib/d3-dsv.min.js"></script>
+</head>
+
+<body>
+
+<!-- <div id="title">Games Rating: 2015 - 2019</div> -->
+<div id="container">rsahai6</div>
+
+<script>
+
+
+var margin = {top: 40, right: 40, bottom: 100, left: 40},
+        width = 960 - margin.left - margin.right,
+        height = 650 - margin.top - margin.bottom;
+
+        try {
+
+            //Get csv data
+            d3.dsv(",", "average-rating.csv", (d) => {
+                //Create Object 
+                return {
+                    name: d.name,
+                    year: parseInt(d.year),
+                    average_rating: Math.floor(d.average_rating),
+                    users_rated: parseInt(d.users_rated)
+                }
+            }).then((values) => {
+
+                    filterdata = values.filter((item) => {
+                        if (item.year == 2015 || item.year == 2016 || item.year == 2017 || item.year == 2018 || item.year == 2019)
+                            //if(item.year == 2015)
+                            return item;
+                    });
+                    var color = d3.schemeCategory10
+                    //Group data by year, rating
+                    const groupedratings = d3.nest()
+                        .key((d) => { return d.year; })
+                        .sortKeys(d3.ascending)
+                        .key((d) => { return d.average_rating })
+                        .sortKeys(d3.descending)
+                        .rollup((Tot_games) => {
+                            return {
+                                year: Tot_games[0].year,
+                                games: Tot_games,
+                                count: d3.sum(Tot_games, (d) => { return 1; })
+                            }
+                        })
+                        .entries(filterdata);
+
+                    console.log(groupedratings);
+
+                    const yearKeyval = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+                    const count = [];
+                    //Clean data
+                    for (var i in groupedratings) {
+                        const yearRat = [];
+                        for (var j = 0; j < groupedratings[i].values.length; j++) {
+                            yearRat.push(groupedratings[i].values[j].key)
+                            //Capture count for y axis
+                            count.push(groupedratings[i].values[j].value.count);
+                        }
+
+                        const missingKeys = yearKeyval.filter(x => !yearRat.includes(x));
+                        if (missingKeys != null && missingKeys.length > 0) {
+                            for (var j = 0; j < missingKeys.length; j++) {
+                                groupedratings[i].values.push({
+                                    key: missingKeys[j],
+                                    value: {
+                                        count: 0,
+                                        year: parseInt(groupedratings[i].key),
+                                        games: []
+                                    }
+                                });
+                            }
+
+                            groupedratings[i].values.sort((a, b) => {
+                                if (parseInt(a.key) < parseInt(b.key))
+                                    return -1;
+                                else if (parseInt(a.key) > parseInt(b.key))
+                                    return 1;
+
+                                return 0;
+                            })
+                        }
+                    }
+
+                    var xScale = d3
+                        .scaleLinear()
+                        .domain([0, d3.max(values, (d) => { return d.average_rating; })])
+                        .range([0, width ]);
+
+                    var xAxis = d3.axisBottom(xScale)
+                        .ticks(10);
+
+                    var yScale = d3
+                        .scaleLinear()
+                        .domain([0, d3.max(count, (c) => { return c; })])
+                        .range([(height - 180), 0]);
+
+                    var yAxis = d3.axisLeft(yScale);
+
+                    //<svg> containing line chart
+                    var svg = d3.select("body")
+                        .append("svg")
+                        .attr("width", width)
+                        .attr("height", height)
+                        .style("margin-top", "50px");
+
+                    //<svg id=”barchart” > containing bar chart
+                    var barSVG = d3.select("body")
+                        .append("svg")
+                        .attr("id", "barchart")
+                        .attr("width", 1100)
+                        .attr("height", 800)
+                        .style("display", "inline")
+                        .style("margin-top", "50px");
+
+                    //+-- <g id=”lines”> element containing all line elements
+                    var gLines = svg.append("g").attr("id", "lines");
+
+
+                    gLines.selectAll()
+                        .data(groupedratings)
+                        .enter()
+                        .append("path")
+                        .attr("d", function (d) {
+                            return d3.line()
+                                .x(function (d) { return xScale((d.key)); })
+                                .y(function (d) { return yScale(+d.value.count); })
+                                (d.values);
+                        })
+
+                        .attr("transform", "translate(50,50)")
+                        .attr("fill", "none")
+                        .attr("stroke-width", 2)
+                        .attr("stroke", function (d) {
+                            if ((d.key).localeCompare("2015") == 0) { return color[0] }
+                            else if ((d.key).localeCompare("2016") == 0) { return color[1] }
+                            else if ((d.key).localeCompare("2017") == 0) { return color[2] }
+                            else if ((d.key).localeCompare("2018") == 0) { return color[3] }
+                            else if ((d.key).localeCompare("2019") == 0) { return color[4] }
+                        });
+
+                    //+-- <g id=”x-axis-lines"> element for x-axis
+                    svg.append("g")
+                        .attr("id", "x-axis-lines")
+                        .attr("transform", "translate(50,620)")
+                        .call(xAxis);
+
+                        svg.append("text").text("Rating")
+                        .attr("transform", "translate(" + (450) + "," + (1.5 * margin.top + height) + ")");
+
+                    //+-- <g id=”y-axis-lines"> element for y-axis
+                    svg.append("g")
+                        .attr("id", "y-axis-lines")
+                        .attr("transform", "translate(50,50)")
+                        .call(yAxis);
+
+
+                    //+-- <g id=”circles”> element for all circular elements
+                    svg.append("g")
+                        .attr("id", "circles")
+                        .selectAll()
+                        .data(groupedratings)
+                        .enter()
+                        .selectAll()
+                        .data(function (d) { return d.values; })
+                        .enter()
+                        .append("circle")
+                        .attr("r", 5)
+                        .attr("cx", function (d) { return xScale(parseInt(d.key)); })
+                        .attr("cy", function (d) { return yScale(+d.value.count); })
+                        .attr("transform", "translate(50,50)")
+                        .attr("fill", function (d) {
+                            if (d.value.year === 2015)
+                                return color[0];
+                            else if (d.value.year === 2016)
+                                return color[1];
+                            else if (d.value.year === 2017)
+                                return color[2];
+                            else if (d.value.year === 2018)
+                                return color[3];
+                            else if (d.value.year === 2019)
+                                return color[4];
+                        })
+                        .on('mouseover', function (d, i) {
+
+                            //+-- <g id=”bars”> element for bars
+                            var barLines = barSVG.append("g")
+                            .attr("id", "bars");                            
+
+                            if (d.value.count > 0) {                               
+
+                                // increase size of radius
+                                d3.select(this).attr("r", 15);
+
+                                //change to inline
+                                barSVG.style("display", 'inline');
+
+                                var values = d.value.games;
+                                var topRatedGames = values
+                                    .sort((a, b) => b.users_rated - a.users_rated)
+                                    .slice(0, 5);
+
+                                const totUser = [];
+                                const popGame = [];
+                                const popYear = d.value.year;
+                                const popRating = d.key;
+                                topRatedGames.forEach(function (game) {
+                                    totUser.push(game["users_rated"]);
+                                    game['name'] = game['name'].substring(0, 10);
+                                    popGame.push(game['name'].substring(0, 10));
+                                });
+
+                                console.log(topRatedGames);
+
+                                var x = d3.scaleLinear()
+                                    .domain([0, d3.max(totUser, (d) => { return d; })])
+                                    .range([0, width]);
+
+                                var y = d3.scaleBand()
+                                    .range([0, height])
+                                    .domain(topRatedGames.map(function (d) { return d.name; }))
+                                    .padding(.1);                                
+
+                                barLines.selectAll("mybar")
+                                    .data(topRatedGames)
+                                    .enter()
+                                    .append("rect")
+                                    .attr("x", x(0))
+                                    .attr("y", function (d) { return parseInt(y(d.name)); })
+                                    .attr("width", function (d) { return x(d.users_rated); })
+                                    .attr("height", y.bandwidth())
+                                    .attr("transform", "translate(100,0)")
+                                    .attr("fill", "#69b3a2")
+
+                                //+-- <g id=”x-axis-bars"> element for x-axis                       
+                                barSVG.append("g")
+                                    .attr("id", "x-axis-bars")
+                                    .attr("transform", "translate(100,750)")
+                                    .call(d3.axisBottom(x));
+
+
+
+                                //+-- <g id=”y-axis-bars"> element for y-axis                         
+                                barSVG.append("g")
+                                    .attr("id", "y-axis-bars")
+                                    .attr("transform", "translate(100,0)")
+                                    .call(d3.axisLeft(y));
+
+                                //<g id=”circles”> element for all circular elements
+
+                                const popGametext = "top 5 most rated games of " + popYear + " with rating " + popRating;
+                                //+-- <g id=”bar_chart_title”> element for bar chart title
+                                barSVG.append("g")
+                                    .attr("id", "bar_chart_title")
+                                    .append("text")
+                                    .attr("class", "title")
+                                    .attr("x", width / 2)
+                                    .attr("y", 20)
+                                    .style("text-anchor", "middle")
+                                    .attr("font-size", "20px")
+                                    .style("font-weight", "bold")
+                                    .text(popGametext);
+
+
+                                //+-- <g id=”bar_x_axis_label”> element for x axis label                        
+                                //X axis label
+                                barSVG.append("g")
+                                    .attr("id", "bar_x_axis_label")
+                                    .append("text")
+                                    .attr("text-anchor", "end")
+                                    .attr("stroke", "black")
+                                    .attr("font-size", "14px")
+                                    .attr("id", "x_axis_label")
+                                    .attr("transform", "translate(400,780)")
+                                    .text("Number of users");
+
+
+
+                                //+-- <g id=”bar_y_axis_label”> element for y axis label
+                                //Y axis label bar_y_axis_label
+                                const y_bar_label = barSVG.append("g")
+                                    .attr("id", "bar_y_axis_label");
+
+                                    y_bar_label.append("text")
+                                    .attr("transform", "translate(50,400)")
+                                    .style("y", "200")
+                                    .attr("text-anchor", "end")
+                                    .attr("stroke", "black")
+                                    .attr("font-size", "12px")
+                                    .attr("id", "x_axis_label")
+                                    .text("Games");
+
+
+
+                               
+                            }else{
+                                barSVG.selectAll("*").style("display", 'none');
+                            }
+                        })
+                        .on('mouseout', function (d, i) {
+                            // reset size of radius                         
+                            d3.select(this).attr("r", 5);
+                            barSVG.selectAll("*").style("display", 'none');
+                            barSVG.selectAll("*").remove();                            
+                        });
+
+                    //+-- <g id=”line_chart_title”> element for line chart title
+                    svg.append("g")
+                        .attr("id", "line_chart_title")
+                        .append("text")
+                        .attr("class", "title")
+                        .attr("x", width / 2)
+                        .attr("y", 20)
+                        .style("text-anchor", "middle")
+                        .attr("font-size", "20px")
+                        .style("font-weight", "bold")
+                        .text("Board games by Rating 2015-2019");
+
+                    svg.append("text")
+                        .attr("class", "title")
+                        .attr("x", width / 2)
+                        .attr("y", 42)
+                        .style("text-anchor", "middle")
+                        .attr("font-size", "15px")
+                        .style("fill", "#F40A26")
+                        .text("rsahai6");
+
+
+                    //+-- <g id=”legend”> element for legend
+                    const leg = svg
+                        .append("g")
+                        .attr("id", "legend")
+                        .attr("class", "legend")
+                        .selectAll()
+                        .data(groupedratings)
+                        .enter();
+
+                    leg.append("circle")
+                        .attr("class", "legend")
+                        .attr("cx", width - 100)
+                        .attr("cy", function (d, i) {
+                            return 12 + i * 20
+                        })
+                        .attr("r", 6)
+                        .attr("width", 30)
+                        .attr("height", 20)
+                        .style("fill", function (d) {
+
+                            if (parseInt(d.key) === 2015)
+                                return color[0];
+                            else if (parseInt(d.key) === 2016)
+                                return color[1];
+                            else if (parseInt(d.key) === 2017)
+                                return color[2];
+                            else if (parseInt(d.key) === 2018)
+                                return color[3];
+                            else if (parseInt(d.key) === 2019)
+                                return color[4];
+                        });
+
+
+                    leg.append("text")
+                        .attr("class", "legend")
+                        .attr("x", width - 85)
+                        .attr("y", function (d, i) {
+                            return 14 + i * 20
+                        })
+                        .attr("font-size", "15px")
+                        .attr("font-weight", "bold")
+                        .text(function (d) {
+                            return d.key
+                        })
+                        .style("alignment-baseline", "middle");
+
+                    //X axis label
+                    svg.append("text")
+                        .attr("text-anchor", "end")
+                        .attr("stroke", "black")
+                        .attr("font-size", "14px")
+                        .attr("id", "x_axis_label")
+                        .attr("transform", "translate(" + (450) + "," + (1.5 * margin.top + height) + ")")
+                        .text("Rating");
+
+                    //Y axis label
+                    svg.append("text")
+                        .attr("transform", "translate(" + 10 + "," + (150) + ")" + "rotate(-90)")
+                        .style("y", "200")
+                        .attr("text-anchor", "end")
+                        .attr("stroke", "black")
+                        .attr("font-size", "12px")
+                        .attr("id", "x_axis_label")
+                        .text("Count");
+
+                });
+
+        } catch {
+            console.log("there is an issue in your code");
+        }
+   // });
+
+
+
+</script>
+</body> 
+<!-- </html> -->
+
+
